@@ -50,7 +50,6 @@ if ($_SESSION['logado'] != 1) {
                 <a href="index.php" class=" disp btn-lg btn-primary " > Login </a>
                 <a href="cadastro.php" class=" dispray btn-lg btn-primary " >Cadastrar</a>
                 <a href="listar.php" class=" dispray btn-lg btn-primary " >Buscar Usuario</a>
-                <a href="update.php" class=" dispray btn-lg btn-primary " >Atualizar</a>
                 <a href="?acao=sair" class=" dispray btn-lg btn-primary " >Logout</a>
             </div>
         </nav>
@@ -98,12 +97,14 @@ $cadastrar =filter_input(INPUT_POST, 'btnCadastrar', FILTER_SANITIZE_STRING);
             ?>
             <script type="text/javascript">
                 alert("Cadastrado com sucesso.");
+                document.location.href="listar.php";
             </script>
             <?php
         } else {
             ?>
             <script type="text/javascript">
                 alert("Pessoa não cadastrada.");
+                document.location.href="listar.php";
             </script>
             <?php
         }

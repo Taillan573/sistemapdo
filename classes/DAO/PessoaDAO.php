@@ -68,9 +68,9 @@ class PessoaDAO {
         return $stmt->rowCount();
     }
 
-    public function deletar($email) {
-        $stmt = $this->pdo->prepare("SELECT * FROM pessoa where email=:email");
-        $stmt->bindValue(":email", $email);
+    public function deletar($id) {
+        $stmt = $this->pdo->prepare("SELECT * FROM pessoa where id=:id");
+        $stmt->bindValue(":id", $id);
         $stmt->execute();
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
         foreach ($result as $key ) {
@@ -85,8 +85,8 @@ class PessoaDAO {
             rmdir($diretorio);
             }
 
-            $stmt = $this->pdo->prepare("DELETE FROM pessoa where email=:email");
-            $stmt->bindValue(":email", $email);
+            $stmt = $this->pdo->prepare("DELETE FROM pessoa where id=:id");
+            $stmt->bindValue(":id", $id);
             $stmt->execute();
 
             $dell = $stmt->rowCount();
@@ -96,6 +96,25 @@ class PessoaDAO {
 
     public function alterar($entPessoa,$id) {
        // try {
+
+            $stmt = $this->pdo->prepare("SELECT * FROM pessoa where id=:id");
+            $stmt->bindValue(":id", $id);
+            $stmt->execute();
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            foreach ($result as $key ) {
+            
+            };
+            $foto=$key["foto"];
+            $diretorio = 'fotos/' . $id . '/';
+            if (!unlink($diretorio.$foto)) {
+                rmdir($diretorio);
+            }else{
+                unlink($diretorio.$foto);
+                rmdir($diretorio);
+
+            }
+            
+            
             $stmt = $this->pdo->prepare("UPDATE pessoa SET NOME=:nome,IDADE=:idade,EMAIL=:email,SENHA=:senha,FOTO=:foto WHERE id=:id ");
             $stmt->bindValue(':id', $id);
             $param = array(
@@ -108,22 +127,17 @@ class PessoaDAO {
             
             foreach ($param as $key => $value) {
                 $stmt->bindValue($key, $value);
-                //print_r($key.$value);
             }
             $stmt->execute();
-         
-
-            $diretorio = 'fotos/' . $id . '/';
+          if (!mkdir($diretorio)) {
+                move_uploaded_file($_FILES['foto']['tmp_name'], $diretorio . $entPessoa->getFoto());
+            }  else{
+                mkdir($diretorio);
+                move_uploaded_file($_FILES['foto']['tmp_name'], $diretorio . $entPessoa->getFoto());
+            }
+            //
             
-
-            move_uploaded_file($_FILES['foto']['tmp_name'], $diretorio . $entPessoa->getFoto());
             return $stmt->rowCount();
-        }
-            
- /*       } catch (PDOException $ex) {
-
-            var_dump($ex);
-        }*/
-    
+    }    
 
 }

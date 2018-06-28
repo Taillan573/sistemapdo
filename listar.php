@@ -50,7 +50,6 @@ if ($_SESSION['logado'] != 1) {
                 <a href="index.php" class=" disp btn-lg btn-primary " > Login </a>
                 <a href="cadastro.php" class=" dispray btn-lg btn-primary " >Cadastrar</a>
                 <a href="listar.php" class=" dispray btn-lg btn-primary " >Buscar Usuario</a>
-                <a href="update.php" class=" dispray btn-lg btn-primary " >Atualizar</a>
                 <a href="?acao=sair" class=" dispray btn-lg btn-primary " >Logout</a>
             </div>
         </nav>
@@ -106,12 +105,11 @@ if ($_SESSION['logado'] != 1) {
                             <tr>
                                 <th>Email</th>
                                 <td><?php echo $value["email"];
-                                $email=$value["email"];
                                 $id=$value["id"]; ?></td>
                             </tr>
                             <tr>
                                 <td colspan="2">
-                               <?php  echo "<a href=\"delete.php?email=$email\">Apagar</a>";?>
+                               <?php  echo "<a href=\"delete.php?id=$id\">Apagar</a>";?>
 
                                <?php  echo "<a href=\"update.php?id=$id\">Editar</a>";?>
                                </td>
