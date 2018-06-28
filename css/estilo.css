@@ -1,0 +1,19 @@
+/*Limpar formatações padrão*/
+* {
+	margin: 0;
+	padding: 0;
+}
+
+#menu a{
+	margin: -5px;
+}
+
+#menu{
+	display: block;
+}
+
+#navega{
+	top: 5px; 
+	right: 0; 
+	position: absolute;
+}
