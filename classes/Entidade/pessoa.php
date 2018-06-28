@@ -1,13 +1,14 @@
 <?php
 
 class pessoa {
-    
+
     private $id;
     private $nome;
     private $idade;
     private $email;
     private $senha;
-    
+    private $foto;
+
     function getId() {
         return $this->id;
     }
@@ -16,7 +17,7 @@ class pessoa {
         $this->id = $id;
     }
 
-        function getNome() {
+    function getNome() {
         return $this->nome;
     }
 
@@ -48,5 +49,12 @@ class pessoa {
         $this->senha = $senha;
     }
 
+    function getFoto() {
+        return $this->foto;
+    }
+
+    function setFoto($foto) {
+        $this->foto = $foto;
+    }
 
 }

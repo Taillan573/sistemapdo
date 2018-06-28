@@ -69,21 +69,21 @@ if ($_SESSION['logado'] != 1) {
 
 
     <?php
-if (isset($_POST['apagar'])) {
-    $email = strip_tags(trim($_POST['email']));
+//if (isset($_GET['email'])) {
+    $email = strip_tags(trim($_GET['email']));
         if ($userDAO->deletar($email)>0) {
 ?>
             <script type="text/javascript">
                 alert("Pessoa apagada com sucesso.");
             </script>
         <?php
-        
+        header("Location: listar.php");
     } else {
         ?>
             <script type="text/javascript">
                 alert("Pessoa não cadastrada.");
             </script>
         <?php
-}}
+}//}
 ?>
 </html>

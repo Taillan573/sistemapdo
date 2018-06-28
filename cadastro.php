@@ -51,9 +51,10 @@ if ($_SESSION['logado'] != 1) {
             </div>
         </nav>
 
-        <form method="post" name="frmCadastro" class="form-signin">
+        <form method="post" name="frmCadastro" class="form-signin" enctype="multipart/form-data">
             <h1 class="h3 mb-3 font-weight-normal">Bem vindo!</h1>
-            <input type="file" name="arquivo"><br><br>
+            <label>Foto:</label>
+            <input  type="file" name="foto"><br><br>
             <label for="inputNome" class="sr-only">Nome: </label>
             <input type="text" id="inputNome" name="nome" class="form-control" placeholder="Nome"  autofocus/>
             <label for="inputIdade"  class="sr-only">Idade:</label>
@@ -63,7 +64,6 @@ if ($_SESSION['logado'] != 1) {
             <label for="inputSenha" class="sr-only">Senha:</label>
             <input type="password" id="inputSenha" name="senha" class="form-control" placeholder="Senha" >
             <button name="btnCadastrar" type="submit">Cadastrar</button>
-            <p style="color: #fff;padding-top: 40px;">&copy; 2017-2018</p>
         </form>
         <table align="center" border="3">
 
@@ -71,36 +71,37 @@ if ($_SESSION['logado'] != 1) {
 
     <?php
     if (isset($_GET["acao"])) {
-        
-        if($_GET["acao"]=="sair"){
-        $_SESSION['logado'] = 0;
-        ?>
-        <script>
-            document.location.href = "index.php";
-        </script>
-    <?php
-    }}
 
+        if ($_GET["acao"] == "sair") {
+            $_SESSION['logado'] = 0;
+            ?>
+            <script>
+                document.location.href = "index.php";
+            </script>
+            <?php
+        }
+    }
 
-if (isset($_POST['btnCadastrar'])) {
-    $pessoa->setNome($_POST['nome']);
-    $pessoa->setIdade($_POST['idade']);
-    $pessoa->setEmail($_POST['email']);
-    $pessoa->setSenha($_POST['senha']);
-
-    if ($userDAO->cadastrar($pessoa)) {
-        ?>
+    $cadastrar =filter_input(INPUT_POST, 'btnCadastrar', FILTER_SANITIZE_STRING);
+    if (isset($cadastrar)) {
+        $pessoa->setNome($_POST['nome']);
+        $pessoa->setIdade($_POST['idade']);
+        $pessoa->setEmail($_POST['email']);
+        $pessoa->setSenha($_POST['senha']);
+        $pessoa->setFoto($_FILES['foto']['name']);
+        if ($userDAO->cadastrar($pessoa)) {
+            ?>
             <script type="text/javascript">
                 alert("Cadastrado com sucesso.");
             </script>
-        <?php
-    } else {
-        ?>
+            <?php
+        } else {
+            ?>
             <script type="text/javascript">
                 alert("Pessoa não cadastrada.");
             </script>
-        <?php
+            <?php
+        }
     }
-}
-?>
+    ?>
 </html>

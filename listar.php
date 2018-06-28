@@ -27,6 +27,11 @@ if ($_SESSION['logado'] != 1) {
             .disp{
                 display: <?php echo $displa; ?>;
             }
+
+            img{
+                width: 110;
+                height: 149;
+            }
         </style>
         <link rel="stylesheet" type="text/css" href="css/estilo.css">
 
@@ -50,67 +55,103 @@ if ($_SESSION['logado'] != 1) {
                 <a href="?acao=sair" class=" dispray btn-lg btn-primary " >Logout</a>
             </div>
         </nav>
-    <div style="float: left;">
-        <form method="post" name="frmCadastro" class="form-signin">
-            <h1 class="h3 mb-3 font-weight-normal">Bem vindo!</h1>
-            <label for="inputEmail" class="sr-only">Email: </label>
-            <input type="text" id="inputEmail" name="email" class="form-control" placeholder="Email"  >
-            <button name="btnProcurar" class="dispray" type="submit">Buscar</button>
-        </form>
-    </div>
-    <div style="float: right;">
-        <table align="center" border="3">
+        <div style="float: left;">
+            <form method="post" name="frmCadastro" class="form-signin">
+                <h1 class="h3 mb-3 font-weight-normal">Bem vindo!</h1>
+                <label for="inputEmail" class="sr-only">Email: </label>
+                <input type="text" id="inputEmail" name="email" class="form-control" placeholder="Email"  >
+                <button name="btnProcurar" class="dispray" type="submit">Buscar</button>
+            </form>
+        </div>
 
-    
 
-    <?php
 
-if (isset($_POST['btnProcurar'])) {
-    $email = strip_tags(trim($_POST['email']));
-    if (empty($email)) {
-        ?>
+
+
+        <?php
+        if (isset($_POST['btnProcurar'])) {
+            $email = strip_tags(trim($_POST['email']));
+            if (empty($email)) {
+                ?>
+                <?php
+                foreach ($userDAO->consultar() as &$value) {
+                    ?>
+                     <div style="display: inline;">
+                        <table align="center" border="3">
+                            <tr>
+                                <th>foto</th>
+                                <td><?php
+                                    $id = $value["id"];
+                                    $foto = $value["foto"];
+                                    echo( "<img width=\"110\" height=\"149\" src=\"fotos/$id/$foto\"/>");
+                                    ?>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Ação</th>
+                                <td><?php echo $value["nome"]; ?></td>
+                            </tr><tr>
+
+                            </tr>
+                            <tr>
+                                <th>Idade</th>
+                                <td><?php echo $value["idade"]; ?></td>
+                            </tr>
+                            <tr>
+                                <th>Email</th>
+                                <td><?php echo $value["email"];
+                                $email=$value["email"] ?></td>
+                            </tr>
+                            <tr>
+                               <?php  echo "<a href=\"delete.php?email=$email\">Apagar</a>";?>
+                            </tr>
+                    </div>
+                    <?php
+                }
+            } else {
+                ?>
             <tr>
                 <th>Nome</th>
                 <th>Idade</th>
                 <th>Email</th>
                 <th>Ação</th>
             </tr>
-        <?php
-        foreach ($userDAO->consultar() as &$value) {
-            ?>
+            <?php
+            foreach ($userDAO->consulta($email) as &$value) {
+                ?>
+                <div style="display: inline;">
+                    <table align="center" border="3">
+                        <tr>
+                            <th>foto</th>
+                            <td><?php
+                                $id = $value["id"];
+                                $foto = $value["foto"];
+                                echo( "<img src=\"fotos/$id/$foto\"/>");
+                                ?>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Ação</th>
+                            <td><?php echo $value["nome"]; ?></td>
+                        </tr><tr>
 
-                <tr>
-                    <td><?php echo $value["nome"]; ?></td>
-                    <td><?php echo $value["idade"]; ?></td>
-                    <td><?php echo $value["email"]; ?></td>
-                    <td><?php   ?></td>
-                    <td> <img src="upload/image/<?=(!empty($slt['arquivo']))?($slt['arquivo']):('imagem.jpg')?>" alt="<?=(!empty($slt['legenda']))?>" >
-                    </td>
-                </tr>
-            <?php
-        }
-    } else {
-        ?>
-            <tr>
-                <th>Nome</th>
-                <th>Idade</th>
-                <th>Email</th>
-                <th>Ação</th>
-            </tr>
-        <?php
-        foreach ($userDAO->consulta($email) as &$value) {
-            ?>
-                <tr>
-                    <td><?php echo $value["nome"]; ?></td>
-                    <td><?php echo $value["idade"]; ?></td>
-                    <td><?php echo $value["email"]; ?></td>
-                    <td> <img src="upload/image/<?=(!empty($slt['arquivo']))?($slt['arquivo']):('imagem.jpg')?>" alt="<?=(!empty($slt['legenda']))?>" ></td>
-                </tr>
-            <?php
+                        </tr>
+                        <tr>
+                            <th>Idade</th>
+                            <td><?php echo $value["idade"]; ?></td>
+                        </tr>
+                        <tr>
+                            <th>Email</th>
+                            <td><?php echo $value["email"]; ?></td>
+
+
+                        </tr>
+                </div>
+                <?php
+            }
         }
     }
-}
-?>
-</div>
+    ?>
+
 </body>
 </html>
