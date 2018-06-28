@@ -63,11 +63,18 @@ if ($_SESSION['logado'] != 1) {
             </form>
         </div>
 
+    <?php
+    if (isset($_GET["acao"])) {
+        
+        if($_GET["acao"]=="sair"){
+        $_SESSION['logado'] = 0;
+        ?>
+        <script>
+            document.location.href = "index.php";
+        </script>
+    <?php
+    }}
 
-
-
-
-        <?php
         if (isset($_POST['btnProcurar'])) {
             $email = strip_tags(trim($_POST['email']));
             if (empty($email)) {
@@ -99,10 +106,15 @@ if ($_SESSION['logado'] != 1) {
                             <tr>
                                 <th>Email</th>
                                 <td><?php echo $value["email"];
-                                $email=$value["email"] ?></td>
+                                $email=$value["email"];
+                                $id=$value["id"]; ?></td>
                             </tr>
                             <tr>
+                                <td colspan="2">
                                <?php  echo "<a href=\"delete.php?email=$email\">Apagar</a>";?>
+
+                               <?php  echo "<a href=\"update.php?id=$id\">Editar</a>";?>
+                               </td>
                             </tr>
                     </div>
                     <?php
