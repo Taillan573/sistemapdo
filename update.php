@@ -51,7 +51,6 @@ if ($_SESSION['logado'] != 1) {
                 <a href="cadastro.php" class=" dispray btn-lg btn-primary " >Cadastrar</a>
                 <a href="listar.php" class=" dispray btn-lg btn-primary " >Buscar Usuario</a>
                 <a href="update.php" class=" dispray btn-lg btn-primary " >Atualizar</a>
-                <a href="delete.php" class=" dispray btn-lg btn-primary " >Excluir</a>
                 <a href="?acao=sair" class=" dispray btn-lg btn-primary " >Logout</a>
             </div>
         </nav>

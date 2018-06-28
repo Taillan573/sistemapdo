@@ -79,9 +79,12 @@ class PessoaDAO {
         $id=$key["id"];
         $foto=$key["foto"];
         if ($stmt->rowCount() > 0) {
+            if (!empty($foto)) {
             $diretorio = 'fotos/'.$id.'/';
             unlink($diretorio.$foto);
             rmdir($diretorio);
+            }
+
             $stmt = $this->pdo->prepare("DELETE FROM pessoa where email=:email");
             $stmt->bindValue(":email", $email);
             $stmt->execute();
